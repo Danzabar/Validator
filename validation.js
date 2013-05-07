@@ -3,14 +3,11 @@ Validates the form that it is bound to, currently requires you to pass the form 
 Returns boolean
 */
 var Validation = function(form) {
-        console.log('Validation beginning');
         // Get the input elements with 'Required' class.
         var elements = form.find('.required');
         errorFlag = 0;
-        console.log('aquiring assets');
         // iterate through the elements validating the fields as we go.
         $.each(elements, function() {
-            console.log('looping through elements, currently on ' + $(this).attr('name'));
             var type = getType($(this));
             if (ValidateField($(this), type) === false) {
                 errorFlag++;
@@ -19,10 +16,8 @@ var Validation = function(form) {
         // Now for the required_optional classes, these are dependant on other form elements, as you can see
         // The mobile field is dependant on you ticking the offer checkbox.
         var dependants = form.find('.required_optional');
-        console.log('grabbing dependants');
         // Now we can proceed in a similar way to the required class.
         $.each(dependants, function() {
-            console.log('looping through dependants currently on ' + $(this).attr('name'));
             var dependancy = $('[name=' + $(this).data('dependant') + ']');
             d_type = getType(dependancy);
             dependancy_type = $(this).data('dtype');
@@ -35,7 +30,6 @@ var Validation = function(form) {
             }
         });
         if (errorFlag > 0) {
-            console.log('found ' + errorFlag + ' validation errors');
             return false;
         }
     }
@@ -98,7 +92,6 @@ var ValidateField = function(element, type) {
         if (type == 'text' || type == 'email' || type == 'int' || type == 'phone' || type == 'select' || type == 'custom') {
             if (value.length == 0 || typeof(value) === 'undefined') {
                 if (errors === true) {
-                    console.log(element.attr('name') + ' is not set');
                 }
                 return false;
             }
@@ -106,31 +99,26 @@ var ValidateField = function(element, type) {
         switch (type) {
         case 'email':
             if (/[^\s@]+@[^\s@]+\.[^\s@]+/.test(value) === false) {
-                console.log(element.attr('name') + ' not a valid email');
                 return false;
             }
             break;
         case 'phone':
             if (/[0-9]{10}/.test(value) === false) {
-                console.log(element.attr('name') + ' not a valid phone number');
                 return false;
             }
             break;
         case 'int':
             if ($.isNumeric(value) === false) {
-                console.log(element.attr('name') + ' not a valid numeric');
                 return false;
             }
             break;
         case 'checkbox':
             if ($("input[name=" + element.attr('name') + "]").is(':checked') === false) {
-                console.log(element.attr('name') + ' is not checked');
                 return false;
             }
             break;
         case 'radio':
             if ($("input[name=" + element.attr('name') + "]").is(':checked') === false) {
-                console.log(element.attr('name') + ' is not checked');
                 return false;
             }
             break;
@@ -140,12 +128,10 @@ var ValidateField = function(element, type) {
                 // We have a value to match
                 var reg = new RegExp(element.data('rules'));
                 if (reg.test(value) === false) {
-                    console.log(element.attr('name') + ' custom validation failed.');
                     return false;
                 }
             }
             break;
         }
-        console.log(element.attr('name') + ' passed validation');
         return true;
     }
