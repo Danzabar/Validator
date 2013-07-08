@@ -86,10 +86,8 @@ var ValidateField = function(field, type, report) {
 	return true;
 }
 
-var checkDependant = function(field) {
-	var type = getType(field);
-	
-	return ValidateField(field, type);
+var checkDependant = function(field) {	
+	return ValidateField(field, getType(field));
 }
 	
 var checkRegex = function(value, type, regex){
@@ -125,10 +123,17 @@ var reportError = function(field, type){
 
 var errorLib = function(type) {
 	// make an ajax request to the errors.json file
-	$.getJSON("errorConfig.json", function(data) {
-		return data[''+type+''];
-		console.log(data[''+type+'']);	
-	});
+	var errors = {
+    "text": "This field is required",
+    "email": "Please provide a valid email address",
+    "int": "Please provide a valid number",
+    "custom": "This field is required",
+    "phone": "Please provide a valid phone number",
+    "select": "This field is required",
+    "radio": "This field is required",
+    "checkbox": "This field is required" };
+    
+    return errors[type];
 }
 
 var hasError = function(field) {
@@ -139,6 +144,7 @@ var hasError = function(field) {
 }
 
 var placeError = function(field, error) {
+	console.log(error);
 	field.parent().prepend('<span class="error">' + error + '</span>');
 }
 
