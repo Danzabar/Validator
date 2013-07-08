@@ -17,7 +17,7 @@
 		</div>
 		<div class="formRow">
 			<label for="email">Email</label>
-			<input type="text" id="email" name="email" class="required" data-etype="email"/>
+			<input type="text" id="email" name="email" class="required" data-expect="email"/>
 		</div>
 		<div class="formRow">
 			<label for="offer">Want to have special dealings? click box and provide mobile numberings.</label>
@@ -25,11 +25,11 @@
 		</div>
 		<div class="formRow">
 			<label for="mobile">Mobile number</label>
-			<input type="text" name="mobile" id="mobile" class="required_optional" data-etype="phone" data-dependant="offer"/>
+			<input type="text" name="mobile" id="mobile" class="required" data-expect="phone" data-dependant="offer"/>
 		</div>
 		<div class="formRow">
 			<label for="number">Another Number (int validation)</label>
-			<input type="text" name="number" id="number" class="required_optional" data-etype="int" data-dependant="email"/>
+			<input type="text" name="number" id="number" class="required" data-expect="int" data-dependant="email"/>
 		</div>
 		<div class="formRow">
 			<label for="determiner">Select a different value to change what element is required.</label>
@@ -43,7 +43,7 @@
 		</div>
 		<div class="formRow">
 			<label for="dynamic_validation">This element will take the assigned type from the above question.</label>
-			<input type="text" name="dynamic_validation" id="dynamic_validation" class="required_optional" data-dependant="determiner" data-dtype="inherit"/>
+			<input type="text" name="dynamic_validation" id="dynamic_validation" class="required" data-dependant="determiner" data-inherit-type="true"/>
 		</div>
 		<div class="formRow">
 			<label for="comment">Leave a comment</label>
@@ -62,7 +62,7 @@
 		<p>Custom validation can work through data attributes</p>		
 		<div class="formRow">
 			<label for="customVal">Custom validation</label>
-			<input type="text" name="customVal" class="required" id="customVal" data-etype="custom" data-rules="[^\s@]+@[^\s@]+\.[^\s@]+"/>
+			<input type="text" name="customVal" class="required" id="customVal" data-expect="custom" data-rules="[^\s@]+@[^\s@]+\.[^\s@]+"/>
 		</div>
 		
 		<div class="formRow">
@@ -72,11 +72,11 @@
 
    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-	<script src="validation.js"></script>
+	<script src="validatorNew.js"></script>
 	<script>
 	$(document).ready(function(){		
 		$('.smartform').submit(function(){			
-			return Validation($(this));
+			return Validator($(this));
 		});		
 	});
 	</script>

@@ -1,0 +1,10 @@
+{
+    "text": "This field is required",
+    "email": "Please provide a valid email address",
+    "int": "Please provide a valid number",
+    "custom": "This field is required",
+    "mobile": "Please provide a valid mobile number",
+    "select": "This field is required",
+    "radio": "This field is required",
+    "checkbox": "This field is required"
+}
