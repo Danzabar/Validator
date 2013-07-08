@@ -19,7 +19,8 @@ var GatherRequired = function(form) {
 	$.each(elems, function(){		
 		var type = getType($(this));
 		
-		if(ValidateField($(this), type, true) == false){
+		if(ValidateField($(this), type) == false){
+				reportError($(this), type);
 				errors[i] = $(this);
 		}		
 		i++;
@@ -52,6 +53,7 @@ var getType = function(field){
 
 var ValidateField = function(field, type, report) {
 	var value = field.val();
+		regex = '';
 		
 	if(typeof(field.data('dependant')) !== 'undefined' && field.data('dependant').length > 0){
 		if(checkDependant($("#"+field.data('dependant'))) === false){
@@ -60,32 +62,28 @@ var ValidateField = function(field, type, report) {
 	}
 	
 	if(type == 'text' || type == 'email' || type == 'int' || type == 'phone' || type == 'select'){
-		if(value.length > 0 && typeof(value) !== 'undefined'){								
-			return true;
+		if(value.length == 0 || typeof(value) === 'undefined'){								
+			return false;
 		}			
 	}
 	
 	if(type == 'phone' || type == 'email' || type == 'custom'){			
-		if(typeof(field.data('rules')) !== 'undefined' && checkRegex(value, type, field.data('rules')) === true){
-			return true;
+		if(typeof(field.data('rules')) !== 'undefined'){
+			regex = field.data('rules');
 		}
-		
+		return checkRegex(value, type, regex);
 	}
 	
 	switch(type){			
 		case 'int':
-			if($.isNumeric(value) === true) {
-				return true;
-			} 	
+			return $.isNumeric(value);
 			break;
 		case ('checkbox' || 'radio'):
-			if($("input[name="+ field.attr('name') +"]").is(':checked') === true) {
-				return true;
-			}		
+			return $("input[name="+ field.attr('name') +"]").is(':checked');
 			break;		
 	}				
 	
-	return typeof report !== 'undefined' ? reportError(field, type) : false;
+	return true;
 }
 
 var checkDependant = function(field) {
@@ -115,15 +113,10 @@ var checkRegex = function(value, type, regex){
  * 
  */
 var reportError = function(field, type){
-	// console.log('Error in:'+ field.attr('name') +', hasType:' + type);
 	var error = '';
 	
-	if(hasError(field) === false){
-		
-			error = errorLib(type);
-	
-		
-		placeError(field, error);
+	if(hasError(field) === false){			
+		placeError(field, errorLib(type));
 		bindListener(field);
 	}
 	
