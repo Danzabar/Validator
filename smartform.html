@@ -76,9 +76,9 @@
 	<script>
 	$(document).ready(function(){		
 		$('.smartform').Validator({
-			errorElement: 'ul',
+			errorElement: 'div',
 			errorClass: 'errorList',
-			errorWrapper: 'li',
+			errorWrapper: 'p',
 			submitHandler : function(form) {
 				console.log(form);
 			}
