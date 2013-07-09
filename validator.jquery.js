@@ -144,7 +144,7 @@
 	}	
 
 	var hasError = function(field) {
-		if(field.parent().find('.error').length > 0){
+		if(field.parent().find('.'+settings.errorClass+'').length > 0){
 			return true;
 		}
 		return false;
