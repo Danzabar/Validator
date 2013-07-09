@@ -122,7 +122,6 @@ var reportError = function(field, type){
 }
 
 var errorLib = function(type) {
-	// make an ajax request to the errors.json file
 	var errors = {
     "text": "This field is required",
     "email": "Please provide a valid email address",
@@ -144,7 +143,6 @@ var hasError = function(field) {
 }
 
 var placeError = function(field, error) {
-	console.log(error);
 	field.parent().prepend('<span class="error">' + error + '</span>');
 }
 
