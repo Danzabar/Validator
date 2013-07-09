@@ -23,14 +23,13 @@
 	$(this).on('submit', function(){
 		var errors = GatherRequired($(this));
 		
-		if(errors == 0) {
-			if (settings.submitHandler) {
-				settings.submitHandler($(this));
-				return false;
-			}
-			return true
-		}	
-		return false;
+		
+		if (settings.submitHandler) {
+			settings.submitHandler($(this));
+			return false;
+		}
+		
+		return errors == 0;
 	});
 	
 	var GatherRequired = function(form) {
@@ -57,10 +56,12 @@
 
 	var getType = function(field){
 		// check to see if it has a custom data type already set
-		if(typeof(field.data('expect')) !== 'undefined'){
-			if(field.data('expect').length > 0){
-				return field.data('expect');
-			}
+		if(typeof(field.data('expect')) !== 'undefined' && field.data('expect').length > 0){
+			return field.data('expect');
+		}
+		
+		if(hasParent(field) === true && typeof(field.data('inherit-type')) !== 'undefined'){
+			return inheritType(field);
 		}
 		
 		switch(field.prop('tagName')){
@@ -77,12 +78,21 @@
 		
 		return 'text';
 	}
+	
+	var inheritType = function(field) {
+		var parent = $("#"+field.data('dependant')+"");
+		
+		if(parent.val().length > 0){
+			return parent.val();
+		}
+		return 'text';
+	}
 
 	var ValidateField = function(field, type, report) {
 		var value = field.val();
 			regex = '';
 			
-		if(typeof(field.data('dependant')) !== 'undefined' && field.data('dependant').length > 0){
+		if(hasParent(field) === true){
 			if(checkDependant($("#"+field.data('dependant'))) === false){
 				return true;
 			}
@@ -112,7 +122,13 @@
 		
 		return true;
 	}
-
+	
+	var hasParent = function(field) {
+		if(typeof(field.data('dependant')) !== 'undefined' && field.data('dependant').length > 0){
+			return true;
+		}
+	}
+	
 	var checkDependant = function(field) {	
 		return ValidateField(field, getType(field));
 	}
@@ -134,6 +150,12 @@
 
 	var reportError = function(field, type){
 		var error = '';
+		
+		if(hasParent(field) === true && hasError(field) === true){
+			resetError(field);
+			placeError(field, settings.errors[type]);
+			bindListener(field);
+		}
 		
 		if(hasError(field) === false){			
 			placeError(field, settings.errors[type]);
@@ -172,7 +194,7 @@
 	}
 
 	var resetError = function(field) {
-		field.parent().find('.error').remove();
+		field.parent().find('.'+ settings.errorClass +'').remove();
 	}
 
 	var bindListener = function(field) {
