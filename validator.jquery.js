@@ -174,23 +174,9 @@
 
 	var placeError = function(field, error) {
 		if(settings.errorWrapper){
-			error = wrapError(settings.errorWrapper, error);
+			error = '<'+settings.errorWrapper+'>'+ error +'</'+settings.errorWrapper+'>';
 		}
 		field.parent().append('<'+settings.errorElement+' class="'+settings.errorClass+'">' + error + '</'+settings.errorElement+'>');
-	}
-	
-	var wrapError = function(wrapper, error){
-		switch(wrapper){
-			case 'p':
-				return '<p>'+ error +'</p>';
-			break;
-			case 'span':
-				return '<span>'+ error +'</span>';
-			break;
-			case 'li':
-				return '<li>'+ error +'</li>';
-			break;
-		}
 	}
 
 	var resetError = function(field) {
