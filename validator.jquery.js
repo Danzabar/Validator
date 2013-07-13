@@ -24,7 +24,7 @@
 		var errors = GatherRequired($(this));
 		
 		
-		if (settings.submitHandler) {
+		if (settings.submitHandler && errors == 0) {
 			settings.submitHandler($(this));
 			return false;
 		}
@@ -115,9 +115,9 @@
 			case 'int':
 				return $.isNumeric(value);
 				break;
-			case ('checkbox' || 'radio'):
+			case 'checkbox': case 'radio':
 				return $("input[name="+ field.attr('name') +"]").is(':checked');
-				break;		
+				break;         
 		}				
 		
 		return true;
