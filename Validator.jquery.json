@@ -1,0 +1,31 @@
+{
+    "name": "jQuery Validator",
+    "version": "0.1.1",
+    "title": "jQuery Validator",
+    "author": {
+        "name": "Daniel Cox",
+        "email": "danzabian@gmail.com",
+        "url": "http://www.valeska.co.uk/"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+			"url":"https://github.com/remy/mit-license"
+        }
+    ],
+    "dependencies": {
+        "jquery": ">=1.10"
+    },
+    "description": "Allows you to dynamically validate forms using data-attributes.",
+    "keywords": [
+        "validation",
+        "form",
+        "input",
+		"validator"
+    ],
+    "demo": "http://www.valeska.co.uk/code/validator",
+    "homepage": "http://www.valeska.co.uk/code/validator",
+    "files": [
+        "validator.jquery.js"
+    ]
+}
