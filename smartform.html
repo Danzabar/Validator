@@ -71,7 +71,7 @@
 	</form>
 
    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="validator.jquery.js"></script>
 	<script>
 	$(document).ready(function(){		
@@ -79,6 +79,10 @@
 			errorElement: 'div',
 			errorClass: 'errorList',
 			errorWrapper: 'p',
+            errorHandler: function(element, error) {
+                console.log('element:' + $(element));
+                console.log('error:' + error);                
+            },
 			submitHandler : function(form) {
 				console.log(form);
 			}

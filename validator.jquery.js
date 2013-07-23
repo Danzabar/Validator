@@ -13,8 +13,9 @@
 		"select": "This field is required",
 		"radio": "This field is required",
 		"checkbox": "This field is required" },
-		errorElement : 'span',
-		errorClass : 'error'
+		errorElement : 'li',
+		errorClass : 'error',
+        errorWrapper : 'ul'
 	};
 	
 	
@@ -43,7 +44,7 @@
 			
 			if(ValidateField($(this), type) == false){
 					if(settings.errorHandler){
-						settings.errorHandler(settings.errors[type]);
+						settings.errorHandler($(this),settings.errors[type]);
 					} else {
 						reportError($(this), type);
 					}
